@@ -1,0 +1,123 @@
+digraph SoftwareArchitecture {
+
+    graph [
+        label = "Software Architecture Overview"
+        labelloc = t
+        fontname = "Helvetica"
+        fontsize = 16
+        bgcolor = "#f8f8f8"
+        splines = ortho
+        rankdir = TB
+        nodesep = 0.6
+        ranksep = 0.8
+    ]
+
+    node [
+        fontname = "Helvetica"
+        fontsize = 11
+        style = "filled,rounded"
+        shape = box
+    ]
+
+    edge [
+        fontname = "Helvetica"
+        fontsize = 10
+    ]
+
+    // ── Frontend tier ──────────────────────────────────────────────
+    subgraph cluster_frontend {
+        label = "Frontend"
+        style = filled
+        fillcolor = "#e8f4fd"
+        color = "#4a90d9"
+        penwidth = 2
+
+        WebApp  [label = "Web App\n(React)"      fillcolor = "#aed6f1"]
+        MobileApp [label = "Mobile App\n(Flutter)" fillcolor = "#aed6f1"]
+        DesktopApp [label = "Desktop App\n(Electron)" fillcolor = "#aed6f1"]
+    }
+
+    // ── API Gateway ────────────────────────────────────────────────
+    subgraph cluster_gateway {
+        label = "API Layer"
+        style = filled
+        fillcolor = "#fef9e7"
+        color = "#f39c12"
+        penwidth = 2
+
+        Gateway [label = "API Gateway"        fillcolor = "#fad7a0"]
+        Auth    [label = "Auth Service\n(JWT)" fillcolor = "#fad7a0"]
+        RateLimit [label = "Rate Limiter"     fillcolor = "#fad7a0"]
+    }
+
+    // ── Backend services ───────────────────────────────────────────
+    subgraph cluster_services {
+        label = "Backend Services"
+        style = filled
+        fillcolor = "#eafaf1"
+        color = "#27ae60"
+        penwidth = 2
+
+        UserSvc   [label = "User Service"    fillcolor = "#a9dfbf"]
+        OrderSvc  [label = "Order Service"   fillcolor = "#a9dfbf"]
+        NotifySvc [label = "Notify Service"  fillcolor = "#a9dfbf"]
+        SearchSvc [label = "Search Service"  fillcolor = "#a9dfbf"]
+    }
+
+    // ── Data tier ──────────────────────────────────────────────────
+    subgraph cluster_data {
+        label = "Data Tier"
+        style = filled
+        fillcolor = "#f5eef8"
+        color = "#8e44ad"
+        penwidth = 2
+
+        PostgreSQL [label = "PostgreSQL\n(primary)"  shape = cylinder fillcolor = "#d7bde2"]
+        Redis      [label = "Redis\n(cache)"         shape = cylinder fillcolor = "#d7bde2"]
+        Elastic    [label = "Elasticsearch\n(index)" shape = cylinder fillcolor = "#d7bde2"]
+        MsgQueue   [label = "Message Queue\n(AMQP)"  shape = component fillcolor = "#d7bde2"]
+    }
+
+    // ── External ───────────────────────────────────────────────────
+    subgraph cluster_external {
+        label = "External Services"
+        style = filled
+        fillcolor = "#fdedec"
+        color = "#e74c3c"
+        penwidth = 2
+
+        EmailSvc [label = "Email\n(SendGrid)"  fillcolor = "#f1948a"]
+        SMSSvc   [label = "SMS\n(Twilio)"      fillcolor = "#f1948a"]
+        PaySvc   [label = "Payment\n(Stripe)"  fillcolor = "#f1948a"]
+    }
+
+    // ── HTTPS requests (blue) ──────────────────────────────────────
+    WebApp    -> Gateway [color = "#2980b9" penwidth = 2 label = "HTTPS"]
+    MobileApp -> Gateway [color = "#2980b9" penwidth = 2]
+    DesktopApp -> Gateway [color = "#2980b9" penwidth = 2]
+
+    // ── Auth flow (orange) ─────────────────────────────────────────
+    Gateway -> Auth      [color = "#e67e22" penwidth = 2 label = "validate"]
+    Gateway -> RateLimit [color = "#e67e22" penwidth = 1 style = dashed]
+
+    // ── Service routing (green) ────────────────────────────────────
+    Gateway -> UserSvc   [color = "#27ae60" penwidth = 2 label = "route"]
+    Gateway -> OrderSvc  [color = "#27ae60" penwidth = 2]
+    Gateway -> SearchSvc [color = "#27ae60" penwidth = 2]
+
+    // ── Async events (purple, dashed) ──────────────────────────────
+    OrderSvc -> MsgQueue   [color = "#8e44ad" penwidth = 2 style = dashed label = "publish"]
+    MsgQueue -> NotifySvc  [color = "#8e44ad" penwidth = 2 style = dashed label = "consume"]
+
+    // ── Database access (dark) ─────────────────────────────────────
+    UserSvc  -> PostgreSQL [color = "#2c3e50" penwidth = 1.5]
+    OrderSvc -> PostgreSQL [color = "#2c3e50" penwidth = 1.5]
+    UserSvc  -> Redis      [color = "#c0392b" penwidth = 1.5 style = dashed label = "cache"]
+    OrderSvc -> Redis      [color = "#c0392b" penwidth = 1.5 style = dashed]
+    SearchSvc -> Elastic   [color = "#16a085" penwidth = 1.5]
+
+    // ── External calls (red) ───────────────────────────────────────
+    NotifySvc -> EmailSvc [color = "#e74c3c" penwidth = 1.5]
+    NotifySvc -> SMSSvc   [color = "#e74c3c" penwidth = 1.5]
+    OrderSvc  -> PaySvc   [color = "#e74c3c" penwidth = 2   label = "charge"]
+}

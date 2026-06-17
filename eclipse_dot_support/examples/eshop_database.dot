@@ -1,0 +1,142 @@
+digraph EShopDatabase {
+
+    graph [
+        label = "E-Shop Database Schema"
+        labelloc = t
+        fontname = "Helvetica"
+        fontsize = 16
+        bgcolor = "#f8f8f8"
+        rankdir = LR
+        nodesep = 0.8
+        ranksep = 1.2
+    ]
+
+    node [
+        shape = Mrecord
+        fontname = "Helvetica"
+        fontsize = 11
+        style = filled
+        fillcolor = "#ffffff"
+        color = "#555555"
+    ]
+
+    edge [
+        fontname = "Helvetica"
+        fontsize = 9
+        color = "#888888"
+    ]
+
+    // ── Tables ────────────────────────────────────────────────────
+
+    Category [
+        fillcolor = "#ddeeff"
+        label = "
+            <pk> Category |
+            <id>  category_id   : INT (PK) |
+                  name          : VARCHAR(100) |
+                  description   : TEXT |
+            <par> parent_id     : INT (FK)
+        "
+    ]
+
+    Product [
+        fillcolor = "#ddeeff"
+        label = "
+            <pk> Product |
+            <id>  product_id    : INT (PK) |
+                  name          : VARCHAR(200) |
+                  description   : TEXT |
+                  price         : DECIMAL(10,2) |
+                  stock_qty     : INT |
+            <cat> category_id   : INT (FK)
+        "
+    ]
+
+    Customer [
+        fillcolor = "#ddffdd"
+        label = "
+            <pk> Customer |
+            <id>  customer_id   : INT (PK) |
+                  email         : VARCHAR(255) |
+                  name          : VARCHAR(100) |
+                  phone         : VARCHAR(20) |
+            <adr> address_id    : INT (FK)
+        "
+    ]
+
+    Address [
+        fillcolor = "#ddffdd"
+        label = "
+            <pk> Address |
+            <id>  address_id    : INT (PK) |
+                  street        : VARCHAR(255) |
+                  city          : VARCHAR(100) |
+                  postal_code   : VARCHAR(20) |
+                  country       : VARCHAR(100)
+        "
+    ]
+
+    Order [
+        fillcolor = "#fff0cc"
+        label = "
+            <pk> Order |
+            <id>  order_id      : INT (PK) |
+            <cus> customer_id   : INT (FK) |
+            <adr> ship_addr_id  : INT (FK) |
+                  order_date    : DATETIME |
+                  status        : ENUM |
+                  total_amount  : DECIMAL(12,2)
+        "
+    ]
+
+    OrderItem [
+        fillcolor = "#fff0cc"
+        label = "
+            <pk> OrderItem |
+            <id>  item_id       : INT (PK) |
+            <ord> order_id      : INT (FK) |
+            <prd> product_id    : INT (FK) |
+                  quantity      : INT |
+                  unit_price    : DECIMAL(10,2)
+        "
+    ]
+
+    Payment [
+        fillcolor = "#ffe0e0"
+        label = "
+            <pk> Payment |
+            <id>  payment_id    : INT (PK) |
+            <ord> order_id      : INT (FK) |
+                  payment_date  : DATETIME |
+                  amount        : DECIMAL(12,2) |
+                  method        : ENUM |
+                  status        : ENUM
+        "
+    ]
+
+    // ── Foreign keys ──────────────────────────────────────────────
+
+    // Self-reference: subcategory → parent category
+    Category:par:e -> Category:id:e  [label = "parent"]
+
+    // Product → Category
+    Product:cat  -> Category:id  [label = "belongs to"]
+
+    // Customer → Address
+    Customer:adr -> Address:id   [label = "default address"]
+
+    // Order → Customer
+    Order:cus    -> Customer:id  [label = "placed by"]
+
+    // Order → Address (shipping)
+    Order:adr    -> Address:id   [label = "ship to"]
+
+    // OrderItem → Order
+    OrderItem:ord -> Order:id    [label = "part of"]
+
+    // OrderItem → Product
+    OrderItem:prd -> Product:id  [label = "refers to"]
+
+    // Payment → Order
+    Payment:ord  -> Order:id     [label = "pays for"]
+}

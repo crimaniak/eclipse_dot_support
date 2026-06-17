@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="eclipse_dot_support"
+      label="Eclipse_dot_support"
+      version="1.0.5.qualifier"
+      provider-name="kulentsov"
+      image="icons/feature32.png">
+
+   <description url="https://github.com/crimaniak/eclipse_dot_support">
+      Graphviz DOT language support
+   </description>
+
+   <copyright>
+      Copyright (c) 2024 Alexey Kulentsov. All rights reserved.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License - v 2.0
+
+      THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
+      PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION
+      OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+
+      The full license text is available at:
+      https://www.eclipse.org/legal/epl-2.0/
+   </license>
+
+   <plugin
+         id="eclipse_dot_plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

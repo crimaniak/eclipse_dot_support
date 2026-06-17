@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <extension point="org.eclipse.core.contenttype.contentTypes">
+    <content-type
+        file-extensions="dot,gv"
+        id="eclipse.dot.plugin.dotContentType"
+        name="DOT Graph"
+        priority="normal">
+    </content-type>
+  </extension>
+
+  <extension point="org.eclipse.ui.editors">
+    <editor
+        class="eclipse.dot.plugin.editor.DotEditor"
+        contentTypeId="eclipse.dot.plugin.dotContentType"
+        default="true"
+        id="eclipse.dot.plugin.editor.DotEditor"
+        name="DOT Editor">
+    </editor>
+  </extension>
+
+  <extension point="org.eclipse.ui.views">
+    <view
+        class="eclipse.dot.plugin.view.DotGraphView"
+        id="eclipse.dot.plugin.view.DotGraphView"
+        name="DOT Graph"
+        restorable="true">
+    </view>
+  </extension>
+
+  <extension point="org.eclipse.ui.preferencePages">
+    <page
+        class="eclipse.dot.plugin.preferences.DotPreferencePage"
+        id="eclipse.dot.plugin.preferences.DotPreferencePage"
+        name="DOT Support">
+    </page>
+  </extension>
+
+</plugin>

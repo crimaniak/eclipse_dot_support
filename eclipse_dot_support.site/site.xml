@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/eclipse_dot_support_1.0.5.202606030039.jar" id="eclipse_dot_support" version="1.0.5.202606030039">
+      <category name="dot.support"/>
+   </feature>
+   <category-def name="dot.support" label="DOT Support"/>
+</site>
