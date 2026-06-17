@@ -31,7 +31,7 @@ A dedicated **DOT Graph View** renders the graph and updates it whenever a `.dot
 
 | Editor with syntax highlighting | Graph preview |
 |---|---|
-| ![DOT editor](eclipse_dot_support/examples/software_architecture.dot.svg) | ![Graph view](eclipse_dot_support/examples/eshop_database.dot.svg) |
+| ![DOT editor](Editor_screenshot.png) | ![Graph view](eclipse_dot_support/examples/software_architecture.dot.svg) |
 
 ## Requirements
 
