@@ -41,6 +41,13 @@ A dedicated **DOT Graph View** renders the graph and updates it whenever a `.dot
 
 ## Installation
 
+### From GitHub Pages (recommended)
+
+1. In Eclipse, open **Help > Install New Software**.
+2. Click **Add**, enter the URL `https://crimaniak.github.io/eclipse_dot_support/` and click **Add**.
+3. Select **DOT Support** and complete the installation wizard.
+4. Restart Eclipse when prompted.
+
 ### From source (local P2 update site)
 
 1. Clone the repository:
