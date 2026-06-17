@@ -1,5 +1,7 @@
 # Eclipse DOT Support
 
+[![Build](https://github.com/crimaniak/eclipse_dot_support/actions/workflows/build.yml/badge.svg)](https://github.com/crimaniak/eclipse_dot_support/actions/workflows/build.yml)
+
 An Eclipse plugin that adds full editing and rendering support for [Graphviz](https://graphviz.org/) DOT files (`*.dot`, `*.gv`).
 
 ## Features
