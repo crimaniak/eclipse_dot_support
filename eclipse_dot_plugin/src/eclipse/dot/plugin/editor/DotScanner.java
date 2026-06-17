@@ -24,6 +24,10 @@ public class DotScanner extends RuleBasedScanner {
         IToken attribute = new Token(new TextAttribute(
             manager.getColor(new RGB(128, 0, 0))));
 
+        // The default token must be non-undefined so that unmatched words (e.g.
+        // "Category_id") are consumed whole. Without it, WordRule unreads the
+        // full word on a miss and the scanner re-enters mid-word, causing the
+        // "id" suffix to be falsely highlighted as an attribute.
         WordRule wordRule = new WordRule(new IWordDetector() {
             @Override
             public boolean isWordStart(char c) {
@@ -33,7 +37,7 @@ public class DotScanner extends RuleBasedScanner {
             public boolean isWordPart(char c) {
                 return Character.isLetterOrDigit(c) || c == '_';
             }
-        });
+        }, new Token(null));
 
         String[] keywords = { "graph", "digraph", "subgraph", "node", "edge", "strict" };
         for (String kw : keywords) {
