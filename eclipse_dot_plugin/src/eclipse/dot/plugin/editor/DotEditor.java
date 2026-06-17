@@ -7,8 +7,10 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
@@ -22,6 +24,13 @@ public class DotEditor extends TextEditor {
     private DotOutlinePage outlinePage;
     private final ILog log = Platform.getLog(getClass());
 
+    private final IPartListener2 partListener = new IPartListener2() {
+        @Override
+        public void partActivated(IWorkbenchPartReference ref) {
+            if (ref.getPart(false) == DotEditor.this) triggerRender();
+        }
+    };
+
     public DotEditor() {
         super();
         colorManager = new ColorManager();
@@ -32,6 +41,7 @@ public class DotEditor extends TextEditor {
     public void createPartControl(Composite parent) {
         super.createPartControl(parent);
         log.info("DOT file opened: " + getEditorInput().getToolTipText());
+        getSite().getPage().addPartListener(partListener);
         parent.getDisplay().asyncExec(this::triggerRender);
     }
 
@@ -109,6 +119,7 @@ public class DotEditor extends TextEditor {
 
     @Override
     public void dispose() {
+        getSite().getPage().removePartListener(partListener);
         colorManager.dispose();
         super.dispose();
     }
