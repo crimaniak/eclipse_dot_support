@@ -27,9 +27,23 @@ jobs:
         run: mvn -B clean package
         working-directory: eclipse_dot_support.parent
 
-      - name: Upload update site
-        uses: actions/upload-artifact@v4
+      - name: Upload update site artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: update-site
           path: eclipse_dot_support.site/target/repository/
-          if-no-files-found: error
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
