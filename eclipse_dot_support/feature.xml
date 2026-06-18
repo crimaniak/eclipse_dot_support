@@ -3,7 +3,7 @@
       id="eclipse_dot_support"
       label="Eclipse DOT Support"
       version="1.0.5.qualifier"
-      provider-name="kulentsov"
+      provider-name="Oleksii Kulentsov"
       image="icons/feature32.png">
 
    <description url="https://github.com/crimaniak/eclipse_dot_support">
@@ -11,15 +11,15 @@
    </description>
 
    <copyright>
-      Copyright (c) 2024 Alexey Kulentsov. All rights reserved.
+      Copyright (c) 2026 Oleksii Kulentsov. All rights reserved.
    </copyright>
 
    <license url="https://www.eclipse.org/legal/epl-2.0/">
       Eclipse Public License - v 2.0
 
       THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
-      PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION
-      OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+      PUBLIC LICENSE (&quot;AGREEMENT&quot;). ANY USE, REPRODUCTION OR DISTRIBUTION
+      OF THE PROGRAM CONSTITUTES RECIPIENT&apos;S ACCEPTANCE OF THIS AGREEMENT.
 
       The full license text is available at:
       https://www.eclipse.org/legal/epl-2.0/
@@ -27,9 +27,6 @@
 
    <plugin
          id="eclipse_dot_plugin"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>
